@@ -1,3 +1,5 @@
+# Olist E-Commerce End-to-End Analytics Pipeline
+
 ## Dashboard Preview
 
 ### Executive Overview
@@ -7,8 +9,6 @@
 ### Logistics and Experience
 
 ![Logistics and Experience](04_screenshots/02_logistics_experience.jpg)
-
-# Olist E-Commerce End-to-End Analytics Pipeline
 
 ## Project Overview
 
