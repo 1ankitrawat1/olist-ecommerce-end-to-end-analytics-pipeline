@@ -96,6 +96,11 @@ Total analysis scope: 1.5M+ rows.
 - Review impact
 - Logistics performance
 
+### Key Insights from the Data
+- Credit Card (78.34%) is the most preferred payment method, followed by Boleto (17.92%).
+- São Paulo is the single largest hub by a massive margin, but it also carries the highest volume of late or stuck orders (currently 7,827 orders).
+- There is a direct hit on customer satisfaction when delays happen—the average rating drops sharply from 4.3 (On Time) down to 2.6 (Late).
+
 ## Repository Structure
 
 ```text
