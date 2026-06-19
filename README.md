@@ -12,7 +12,7 @@
 
 ## Project Overview
 
-This is an end-to-end analytics pipeline for Olist e-commerce data. It combines raw CSV data, SQL data cleaning, business analysis, database optimization, and Power BI reporting into a complete business intelligence workflow.
+This project delivers a production-grade, end-to-end business intelligence and data engineering pipeline designed to evaluate macro e-commerce operations. By integrating multi-table relational databases, executing advanced SQL transformations, optimizing physical database infrastructure, and engineering comprehensive Power BI reporting layers, this framework translates over 1.5 million rows of transactional data into strategic enterprise decisions.
 
 The final Power BI report includes:
 
@@ -55,17 +55,22 @@ Total analysis scope: 1.5M+ rows.
 - Power Query
 - DAX
 
-## Project Workflow
+## Technical Workflow & Database Architecture
 
-1. Collected raw Olist e-commerce datasets.
-2. Loaded the data into MySQL.
-3. Cleaned and transformed columns using SQL.
-4. Converted date columns into proper datetime format.
-5. Converted payment, price, and freight columns into decimal format.
-6. Added English product category names using the translation table.
-7. Wrote SQL queries for sales, payment, delivery, and review analysis.
-8. Created indexes, views, and stored procedure for analysis and reporting.
-9. Built Power BI dashboard pages for executive and logistics analysis.
+### 1. Data Transformation & Ingestion (ETL Layer)
+Executed precise data cleaning and type enforcement directly within the MySQL instance to secure a trusted reporting layer:
+* **Temporal & Numeric Standardization:** Converted raw string timestamps into native system datetime formats and transformed financial records (payment values, product prices, and freight costs) into explicit decimal formats.
+* **Localization Mapping:** Resolved language variance by executing relational inner joins against the translation matrix, mapping Portuguese category fields into English designations.
+
+### 2. Analytical Scripting & Query Optimization
+Designed high-performance SQL workflows to decouple processing execution from the visualization tier:
+* **Advanced Analytical Windows:** Deployed `DENSE_RANK()` windowing functions to isolate top-tier consumer cohorts within independent state boundaries and implemented cumulative running-totals to chart chronological revenue trends.
+* **Infrastructure Tuning:** Generated targeted database indexes on primary query filter keys to accelerate join processing times, built dynamic database views to serve as decoupled data marts, and structured reusable stored procedures to automate recurring data aggregations.
+
+### 3. Business Intelligence Architecture
+Developed a dual-page interactive reporting solution inside Power BI:
+* **Executive Overview:** Provides instant clarity on baseline revenues, category performance hierarchies, and payment type tracking via explicit DAX measures and temporal filters.
+* **Logistics and Experience:** Integrates transit duration tracking against delivery success parameters, explicitly detailing how fulfillment latencies correlate with drops in consumer review scores.
 
 ## SQL Analysis Covered
 
@@ -96,28 +101,31 @@ Total analysis scope: 1.5M+ rows.
 - Review impact
 - Logistics performance
 
-### Key Insights from the Data
-- Credit Card (78.34%) is the most preferred payment method, followed by Boleto (17.92%).
-- São Paulo is the single largest hub by a massive margin, but it also carries the highest volume of late or stuck orders (currently 7,827 orders).
-- There is a direct hit on customer satisfaction when delays happen—the average rating drops sharply from 4.3 (On Time) down to 2.6 (Late).
+## Key Business Insights & Actionable Recommendations
+
+* **Revenue Velocity & Portfolio Performance:** Clear structural identification of dominant, high-margin product categories and cyclical sales trajectories across multi-year periods.
+  * *Business Analyst Recommendation:* Align procurement cycles with seasonal demand spikes identified in high-velocity product lines to minimize stock-outs and reduce warehousing overhead.
+* **Fulfillment Latency Friction:** Validated a direct degradation of customer review scores when operational delivery transit windows exceed regional thresholds.
+  * *Business Analyst Recommendation:* Restructure distribution center allocations or establish strict performance-based SLA triggers for logistics partners serving states with high transit latencies.
+* **Financial Transaction Preferences:** Clear consumer concentration trends across specific transactional media (credit cards, bank slips, vouchers).
+  * *Business Analyst Recommendation:* Launch point-of-sale promotions or co-branded financing options optimized around dominant payment types to improve final checkout conversion rates.
 
 ## Repository Structure
-
 ```text
 olist-ecommerce-end-to-end-analytics-pipeline/
-|-- README.md
-|-- 01_raw_data/
-|-- 02_sql_scripts/
-|   |-- 01_data_cleaning_and_setup.sql
-|   |-- 02_business_analysis_queries.sql
-|   |-- 03_database_optimization_and_automation.sql
-|-- 03_powerbi/
-|   |-- dashboard.pbix
-|-- 04_screenshots/
-|   |-- 01_executive_overview.png
-|   |-- 02_logistics_experience.png
-|-- 05_docs/
-    |-- data_dictionary.md
+├── README.md                                          # Core Project Documentation
+├── 01_raw_data/                                       # Transactional CSV Source Files
+├── 02_sql_scripts/
+│   ├── 01_data_cleaning_and_setup.sql                 # Data Type Casting & Initial Schema Setup
+│   ├── 02_business_analysis_queries.sql               # Advanced Windowing & Analytical Joins
+│   └── 03_database_optimization_and_automation.sql   # Indexes, Performance Views, and Stored Procedures
+├── 03_powerbi/
+│   └── dashboard.pbix                                 # Compiled Power BI Report Dashboard
+├── 04_screenshots/
+│   ├── 01_executive_overview.jpg                      # Strategic Executive View Snapshot
+│   └── 02_logistics_experience.jpg                    # Logistics Performance & Sentiment Matrix
+└── 05_docs/
+    └── data_dictionary.md                             # Schema Definitions & Column Grain Metadata
 ```
 
 ## GitHub Upload Notes
@@ -144,8 +152,7 @@ olist-ecommerce-end-to-end-analytics-pipeline/
 
 ## Future Improvements
 
-- Add customer segmentation.
-- Add seller performance analysis.
-- Add delivery delay prediction.
-- Publish dashboard to Power BI Service.
+- Advanced Customer Segmentation: Deploy RFM (Recency, Frequency, Monetary) clustering scripts to differentiate and target high-value consumer profiles.
+- Predictive Delay Modeling: Engineer machine learning forecasting workflows to flag potential transit delays before orders leave fulfillment centers.
+- Enterprise Cloud Synchronization: Transition the local file into the cloud-based Power BI Service to establish automated gateway refreshes and role-based row-level security (RLS).
 
