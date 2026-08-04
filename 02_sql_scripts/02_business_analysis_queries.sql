@@ -4,8 +4,9 @@ USE olist_ecommerce;
 -- 1.BASIC KPIs
 
 -- Total Orders and Total Revenue
-SELECT COUNT(order_id) AS TOTAL_Orders,
-SUM(payment_value) AS Total_Revenue 
+SELECT 
+	COUNT(order_id) AS TOTAL_Orders,
+	SUM(payment_value) AS Total_Revenue 
 FROM payments;
 
 -- Monthly Revenue Trend
@@ -22,7 +23,8 @@ ORDER BY Order_Year, Order_Month;
 -- 2. CUSTOMER & PRODUCT INSIGHTS
 
 -- Top 5 product categories that generates the Highest Revenue
-SELECT (product_category_name_english) AS product_categories,
+SELECT 
+	(product_category_name_english) AS product_categories,
 	COUNT(oi.order_id) AS Total_items_sold,
 	ROUND(SUM(oi.price),2) AS Total_Sales
 FROM order_items oi JOIN products p 
@@ -32,7 +34,8 @@ ORDER BY Total_Sales DESC
 LIMIT 5;
 
 -- Most used payment type and their transaction value
-SELECT payment_type AS Payment_Method,
+SELECT 
+	payment_type AS Payment_Method,
 	COUNT(order_id) AS Total_Transactions,
 	ROUND(SUM(payment_value), 2) AS Total_Amount_Paid
 FROM payments 
@@ -41,8 +44,9 @@ ORDER BY Total_Transactions DESC;
 
 -- 3. Advanced Business Logic & Time Analysis
 
--- Q5: Which customer states experience the longest delivery times? (Comparing Average Actual vs. Estimated Delivery Days)
-SELECT c.customer_state as State,
+-- Q1: Which customer states experience the longest delivery times? (Comparing Average Actual vs. Estimated Delivery Days)
+SELECT 
+	c.customer_state as State,
 	ROUND(AVG(DATEDIFF(o.order_delivered_customer_date, o.order_purchase_timestamp)),1) AS Avg_order_delivery_date,
 	ROUND(AVG(DATEDIFF(o.order_estimated_delivery_date, o.order_purchase_timestamp)),1) AS Avg_estimated_delivery_date
 FROM customers c JOIN orders o
@@ -51,7 +55,7 @@ WHERE o.order_status = 'delivered' AND o.order_status IS NOT NULL
 GROUP BY State
 ORDER BY Avg_order_delivery_date DESC;
 
--- Q6: What is the direct impact of late deliveries on customer review scores?
+-- Q2: What is the direct impact of late deliveries on customer review scores?
 SELECT 
     CASE 
         WHEN o.order_delivered_customer_date <= o.order_estimated_delivery_date THEN 'On Time / Early'
@@ -95,8 +99,9 @@ WITH MonthlyRevenue AS(
     WHERE order_status ='delivered'
     GROUP BY order_year, order_month
 )
-SELECT order_year, order_month, monthly_sales,
-ROUND(SUM(monthly_sales) OVER (ORDER BY order_year, order_month), 2) AS cumulative_revenue
+SELECT 
+	order_year, order_month, monthly_sales,
+	ROUND(SUM(monthly_sales) OVER (ORDER BY order_year, order_month), 2) AS cumulative_revenue
 FROM MonthlyRevenue
 ORDER BY order_year, order_month;
 
